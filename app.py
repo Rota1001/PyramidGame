@@ -9,6 +9,8 @@ loginManager.session_protection = "strong"
 loginManager.login_view = 'login'
 loginManager.login_message = 'Please Login First' 
 playerList = []
+playingList = {}
+board = {}
 n = 0
 
 with open("./static/data/password.json", "r") as fp:
@@ -35,6 +37,8 @@ def request_loader(request):
     user.is_authenticated = request.form['password'] == users[username]['password']
     return user
 
+def createBoard():
+    return [[[0 for i in range(2)] for j in range(5)] for k in range(5)]
 
 @app.route("/")
 def root():
@@ -78,10 +82,32 @@ def waiting():
     if request.args.get("id"):
         if request.args.get("id") == "-1":
             global n
-            info = {"id": n}
+            info = {"id" : n}
             n = n + 1
             return jsonify(info)
+        else:
+            id = request.args.get("id")
+            global playerList
+            global playingList
+            if id in playingList:
+                return jsonify({"opponent" : playingList[id]})
+            if id not in playerList:
+                playerList.append(id)
+            if len(playerList) >= 2:
+                playerList.remove(id)
+                oppo = playerList.pop()
+                playingList.update({id : oppo})
+                playingList.update({oppo : id})
+                board.update({id : createBoard()})
+                board.update({oppo : board[id]})
+                return jsonify({"opponent" : oppo})
+        return jsonify({"opponent" : "-1"})
     return render_template("waitingRoom.html")
+
+@app.route("/gameRoom/<id>", methods = ["GET"])
+@login_required
+def gameRoom(id):
+    return render_template("gameRoom.html")
 
 if(__name__ == "__main__"):
     app.run(debug=True)
