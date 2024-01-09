@@ -12,6 +12,13 @@ $.ajax({
     }
 }).then(
     function(){
+        window.addEventListener("beforeunload", function(event){
+            $.ajax({
+                url : ("/close?id=" + id),
+                method : "GET",
+                dataType : "json"
+            })
+        });
         setInterval(
         '$.ajax({\
             url : ("/waitingRoom?id=" + id),\
@@ -27,6 +34,8 @@ $.ajax({
             }\
         })', 2500)
     }
-)
+);
+
+
 
 

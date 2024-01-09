@@ -76,6 +76,16 @@ def signUp():
         return redirect('/login')
     return render_template("signUp.html")
 
+@app.route("/close", methods = ["GET"])
+def close():
+    if request.args.get("id"):
+        global playerList
+        try:
+            playerList.remove(request.args.get("id"))
+        except:
+            pass
+        return jsonify({})
+
 @app.route("/waitingRoom", methods = ["GET"])
 @login_required
 def waiting():
