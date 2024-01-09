@@ -1,7 +1,6 @@
 from flask import *
 from flask_login import *
 
-
 app = Flask(__name__)
 app.secret_key = app.config.get('flask', '2b637a3da3bc2c75c90115b79c67349c')
 loginManager = LoginManager()
@@ -9,6 +8,8 @@ loginManager.init_app(app)
 loginManager.session_protection = "strong"
 loginManager.login_view = 'login'
 loginManager.login_message = 'Please Login First' 
+playerList = []
+n = 0
 
 with open("./static/data/password.json", "r") as fp:
     users = json.load(fp)
@@ -53,13 +54,8 @@ def login():
         user = User()
         user.id = username
         login_user(user)
-        return redirect('/gameMenu')
+        return redirect('/waitingRoom')
     return render_template('login.html')
-
-@app.route("/gameMenu")
-@login_required
-def gameMenu():
-    return render_template("gameMenu.html")
 
 @app.route("/signUp", methods = ["GET", "POST"])
 def signUp():
@@ -75,8 +71,17 @@ def signUp():
             fp.write(json.dumps(users))
         return redirect('/login')
     return render_template("signUp.html")
-    
+
+@app.route("/waitingRoom", methods = ["GET"])
+@login_required
+def waiting():
+    if request.args.get("id"):
+        if request.args.get("id") == "-1":
+            global n
+            info = {"id": n}
+            n = n + 1
+            return jsonify(info)
+    return render_template("waitingRoom.html")
 
 if(__name__ == "__main__"):
-    print(app.secret_key)
-    app.run()
+    app.run(debug=True)
