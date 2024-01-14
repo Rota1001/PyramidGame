@@ -1,4 +1,4 @@
-.triBtn{
+    .triBtn{
     font-family: sans-serif;
     font-weight: bold;
     text-decoration: none;
@@ -36,4 +36,45 @@
     transform: translate(-50%, -50%) scale(0.5) rotate(180deg);
     z-index: -1;
     }
+
+    .invtriBtn{
+        font-family: sans-serif;
+        font-weight: bold;
+        text-decoration: none;
+        color: #fff;
+        position: relative;
+        font-size: 1.2rem;
+        }
+        .invtriBtn::before{
+        content: '';
+        border-bottom: 200px solid #fff;
+        border-left: 120px solid transparent;
+        border-right: 120px solid transparent;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.5);
+        z-index: -1;
+        }
+
+        .invtriBtnFliped{
+            font-family: sans-serif;
+            font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            position: relative;
+            font-size: 1.2rem;
+            }
+            .invtriBtnFliped::before{
+            content: '';
+            border-bottom: 200px solid rgb(0, 0, 0);
+            border-left: 120px solid transparent;
+            border-right: 120px solid transparent;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5) rotate(180deg);
+            z-index: -1;
+            }
+    
     

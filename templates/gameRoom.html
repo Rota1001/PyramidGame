@@ -6,8 +6,21 @@
     </head>   
     
     <body style="background-color: rgb(231, 209, 161);">
+        <script src = "https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="/static/javascript/board.js"></script>
-        <script>init();</script>
+        <script>
+            {{id}}
+            {{oppo}}
+            myId = id;
+            oppoId = oppo;
+            if(id < oppo){
+                turn = 1;
+            }else{
+                turn = 0;
+            }   
+            init();
+            checkTurn();
+        </script>
         
     </body>
 </html>

@@ -26,7 +26,7 @@ $.ajax({
             dataType : "json",\
             success : function(response){\
                 if(response.opponent != "-1"){\
-                    location.href = "/gameRoom/id=" + id;\
+                    location.href = "/gameRoom/id=" + id + "&" + "oppo=" + response.opponent;\
                 }\
             },\
             error : function(error){\

@@ -1,17 +1,21 @@
-let reftop = window.screen.height / 2 + 100;
-let refleft = window.screen.width / 2 - 120 * 2.5;
+let reftop = 500
+let refleft = 100
 let nowNum;
 let board;
 let vis;
 let sum;
 let meet;
 let dir = [[1, 0, 0],[0, 1, 0],[-1, 0, 0],[0, -1, 0],[1, -1, 0], [-1, 1, 0], [1, -1, 1], [-1, 1, 1]];
+let turn;
+let myId;
+let oppoId;
+
 
 function btn(i, j){
     let left = refleft + (i + j / 2) * 120;
     let top = reftop - j * 100;
     return "<div style=\"position:absolute;top:"+top+"px;left:"+left+"px;\">\
-                <a class=\"triBtn\" href=\"javascript:f();\"></a>\
+                <a class=\"triBtn\"></a>\
             </div> "
 }
 
@@ -19,7 +23,23 @@ function arcbtn(i, j){
     let left = refleft + (i + j / 2 + 1 / 2) * 120;
     let top = reftop - (j) * 100;
     return "<div style=\"position:absolute;top:"+top+"px;left:"+left+"px;\">\
-                <a class=\"triBtnFliped\" href=\"javascript:f();\"></a>\
+                <a class=\"triBtnFliped\"></a>\
+            </div> "
+}
+
+function invbtn(i, j){
+    let left = refleft + (i + j / 2) * 120;
+    let top = reftop - j * 100;
+    return "<div style=\"position:absolute;top:"+top+"px;left:"+left+"px;\">\
+                <a class=\"invtriBtn\"></a>\
+            </div> "
+}
+
+function invarcbtn(i, j){
+    let left = refleft + (i + j / 2 + 1 / 2) * 120;
+    let top = reftop - (j) * 100;
+    return "<div style=\"position:absolute;top:"+top+"px;left:"+left+"px;\">\
+                <a class=\"invtriBtnFliped\"></a>\
             </div> "
 }
 
@@ -59,6 +79,80 @@ function init(){
            document.body.innerHTML += arctext((i * 5 + j) * 2 + 1, "", i, j);
         }
     }
+    document.body.innerHTML += invbtn(4, 4);
+    document.body.innerHTML += invarcbtn(4, 4);
+    document.body.innerHTML += invarcbtn(3, 4);
+}
+
+function turnText(text){
+    if(document.getElementById("showTurn"))
+        document.getElementById("showTurn").remove();
+    document.body.innerHTML += "<div id= \"showTurn\" style=\"position:absolute;top:500px;left:850px;color:black;transform: translate(-50%, -25%);font-size:1.5rem;font-family:sans-serif;font-weight:bold;\">"+text+"</div>"
+    
+}
+
+function checkTurn(){
+    setInterval(
+        '$.ajax({\
+            url : ("/turn?stat=quest&id=" + Math.min(parseInt(myId), parseInt(oppoId))),\
+            method : "GET",\
+            dataType : "json",\
+            success : function(response){\
+                if(response.turn == "0"){\
+                    if(myId < oppoId){\
+                        turn = 1;\
+                    }else{\
+                        turn = 0;\
+                    }\
+                }else if(myId < oppoId){\
+                    turn = 0;\
+                }else{\
+                    turn = 1;\
+                }\
+                if(turn){\
+                    turnText("Your Turn");\
+                }else{\
+                    turnText("Your Opponent\'s Turn");\
+                }\
+                nowNum = parseInt(response.num);\
+                if(response.chg != "-1"){\
+                    let x = parseInt(response.x);\
+                    let y = parseInt(response.y);\
+                    let z = parseInt(response.z);\
+                    let n = parseInt(response.n);\
+                    if(board[x][y][z] == 0){\
+                        changeText(x, y, z, n);\
+                        board[x][y][z] = parseInt(n);\
+                    }\
+                }\
+                if(done()){\
+                    if(turn){\
+                        alert("You Loss");\
+                    }else{\
+                        alert("You Win");\
+                    }\
+                    location.href = "/waitingRoom";\
+                }\
+            },\
+            error : function(error){\
+                console.log(error);\
+            }\
+        })', 2500)
+}
+
+function changeTurn(x, y, z, n){
+        $.ajax({
+            url : ("/turn?stat=change&id="+Math.min(parseInt(myId), parseInt(oppoId))+`&x=${x}&y=${y}&z=${z}&n=${n}`),
+            method : "GET",
+            dataType : "json",
+            success : function(response){
+                turn ^= 1;
+                nowNum = parseInt(response.num);
+            },
+            error : function(error){
+                console.log(error);
+            }
+        })
 }
 
 function changeText(x, y, z, num){
@@ -169,6 +263,7 @@ function check(x, y, z, num){
 }
 
 function printMousePos(event) {
+    if(!turn)return;
     x = event.clientX;
     y = event.clientY;
     x -= refleft - 60;
@@ -186,18 +281,22 @@ function printMousePos(event) {
     if(floorx + floory + z >= 5)return;
     if(board[floorx][floory][z] == 0 && check(floorx, floory, z, nowNum)){
         changeText(floorx, floory, z, nowNum);
-        board[floorx][floory][z] = nowNum++;
+        board[floorx][floory][z] = nowNum;
+        changeTurn(floorx, floory, z, nowNum++);
     }
+}
+
+function done(){
     for(var i = 0; i < 5; i++){
         for(var j = 0; j < 5; j++){
             for(var k = 0; k < 2; k++){
                 if(i + j + k >= 5)continue;
                 if(board[i][j][k] == 0 && check(i, j, k, nowNum)){
-                    return;
+                    return false;
                 }
             }
         }
     }
-    alert("You Loss");
+    return true;
 }
 document.addEventListener("click", printMousePos);
