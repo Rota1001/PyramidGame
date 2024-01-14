@@ -46,12 +46,18 @@ function invarcbtn(i, j){
 function text(id, num, i, j){
     let left = refleft + (i + j / 2) * 120;
     let top = reftop - (j) * 100 + 5;
+    if(i + j > 5){
+        return "<div id=\""+id+"\"style=\"position:absolute;top:"+top+"px;left:"+left+"px;color:black;transform: translate(-50%, -25%);font-size:1.5rem;font-family:sans-serif;font-weight:bold;\">"+num+"</div>"
+    }
     return "<div id=\""+id+"\"style=\"position:absolute;top:"+top+"px;left:"+left+"px;color:#fff;transform: translate(-50%, -25%);font-size:1.5rem;font-family:sans-serif;font-weight:bold;\">"+num+"</div>"
 }
 
 function arctext(id, num, i, j){
     let left = refleft + (i + j / 2 + 1 / 2) * 120;
     let top = reftop - (j) * 100 - 20;
+    if(i + j > 5){
+        return "<div id=\""+id+"\"style=\"position:absolute;top:"+top+"px;left:"+left+"px;color:#fff;transform: translate(-50%, -25%);font-size:1.5rem;font-family:sans-serif;font-weight:bold;\">"+num+"</div>"
+    }
     return "<div id=\""+id+"\"style=\"position:absolute;top:"+top+"px;left:"+left+"px;color:black;transform: translate(-50%, -25%);font-size:1.5rem;font-family:sans-serif;font-weight:bold;\">"+num+"</div>"
 }
 
@@ -156,7 +162,8 @@ function changeTurn(x, y, z, n){
 }
 
 function changeText(x, y, z, num){
-    document.getElementById((x * 5 + y) * 2 + z).remove();
+    if(document.getElementById((x * 5 + y) * 2 + z))
+        document.getElementById((x * 5 + y) * 2 + z).remove();
     if(!z){
         document.body.innerHTML += text((x * 5 + y) * 2 + z, num, x, y);
     }else{
@@ -278,6 +285,30 @@ function printMousePos(event) {
     if(x - floorx + y - floory > 1){
         z = 1
     }
+    if(floorx == 3 && floory == 4 && z == 1){
+        if(!board[floorx][floory][z]){
+            changeText(floorx, floory, z, nowNum);
+            board[floorx][floory][z] = nowNum;
+            changeTurn(floorx, floory, z, nowNum++);
+        }
+        return;
+    }
+    if(floorx == 4 && floory == 4 && z == 0){
+        if(board[3][4][1] && !board[floorx][floory][z]){
+            changeText(floorx, floory, z, nowNum);
+            board[floorx][floory][z] = nowNum;
+            changeTurn(floorx, floory, z, nowNum++);
+        }
+        return;
+    }
+    if(floorx == 4 && floory == 4 && z == 1){
+        if(board[4][4][0] && !board[floorx][floory][z]){
+            changeText(floorx, floory, z, nowNum);
+            board[floorx][floory][z] = nowNum;
+            changeTurn(floorx, floory, z, nowNum++);
+        }
+        return;
+    }
     if(floorx + floory + z >= 5)return;
     if(board[floorx][floory][z] == 0 && check(floorx, floory, z, nowNum)){
         changeText(floorx, floory, z, nowNum);
@@ -287,6 +318,7 @@ function printMousePos(event) {
 }
 
 function done(){
+    if(!board[4][4][1])return false;
     for(var i = 0; i < 5; i++){
         for(var j = 0; j < 5; j++){
             for(var k = 0; k < 2; k++){
