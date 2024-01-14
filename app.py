@@ -1,5 +1,6 @@
-from flask import *
-from flask_login import *
+from flask import Flask, redirect, flash, render_template, request, jsonify
+from flask_login import login_user, LoginManager, UserMixin, login_required
+import json
 
 app = Flask(__name__)
 app.secret_key = app.config.get('flask', '2b637a3da3bc2c75c90115b79c67349c')
