@@ -43,19 +43,20 @@
             }
         </style>
     </head>   
+    
     <body id="body" style="background-color: rgb(231, 209, 161);">
         <script src="./static/javascript/board.js"></script>
         <script>
-            reftop = 500;
-            refleft = 200;
+            reftop = window.screen.height / 2 + 100;
+            refleft = window.screen.width / 2 - 120 * 2.5;
             for(i = 0; i < 5; i++){
                 for(j = 0; i + j < 5; j++){
-                    document.body.innerHTML += btn((i * 5 + j) * 2, refleft + (i + j / 2) * 120, reftop - (j) * 100);
+                   document.body.innerHTML += btn(1, refleft + (i + j / 2) * 120, reftop - (j) * 100);
                 }
             }
             for(i = 0; i < 5; i++){
                 for(j = 0; i + j < 4; j++){
-                   document.body.innerHTML += arcbtn((i * 5 + j) * 2 + 1, refleft + (i + j / 2 + 1 / 2) * 120, reftop - (j) * 100);
+                   document.body.innerHTML += arcbtn(1, refleft + (i + j / 2 + 1 / 2) * 120, reftop - (j) * 100);
                 }
             }
             function printMousePos(event) {
@@ -76,10 +77,10 @@
                 alert(`x:${floorx} y:${floory} z:${z}`);
             }
 
-document.addEventListener("click", printMousePos);
-
-          /*  document.body.innerHTML += btn(1, 100, 500);
-            document.body.innerHTML += btn(2, 200, 440);
+           // document.addEventListener("click", printMousePos);
+            
+           // document.body.innerHTML += btn(1, 100, 600);
+         /*   document.body.innerHTML += btn(2, 200, 440);
             document.body.innerHTML += arcbtn(3, 200, 500);*/
         </script>
         <div style="position:absolute;top:100px;left:500px;color:#fff;transform: translate(-50%, -25%);font-size:1.2rem;font-family:sans-serif;font-weight:bold;"></div>
