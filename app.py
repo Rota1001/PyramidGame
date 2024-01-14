@@ -47,7 +47,7 @@ def createBoard():
 
 @app.route("/")
 def root():
-    return redirect("/index")
+    return redirect("/login")
 
 @app.route("/index")
 def Index():

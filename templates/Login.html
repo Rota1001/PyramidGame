@@ -3,16 +3,31 @@
     <head>
         <meta charset="UTF-8">
         <title>Login</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+        <!-- <link rel="stylesheet" type="text/css" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"> -->
     </head>
-    <body>
-        <form method="post" action="/login">
-            <label>Username</label>
-                <input type="text" name="username">
-            <br/>
-            <label>Password</label>
-                <input type="password" name="password">
-                <button type="submit">Login</button>
-        </form>
+    <body style="background-color: rgb(231, 209, 161);">
+        <div class="form_container">
+            <div class ="form login_form">
+                <form method="post" action="/login">
+                    <h2>Login</h2>
+
+                    <div class="input_box">
+                        <input type="text" name="username" placeholder="Enter your username"/>
+                    </div>
+                    <div class="input_box">
+                        <input type="password" name="password" placeholder="Enter your password"/>
+                    </div>
+                    <button class="button" type="submit">Login Now</button>
+                    <div class="login_signup">
+                        Don't have an account?<a href="/signUp" id="signup">SignUp</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
     </body>
+
     
 </html>

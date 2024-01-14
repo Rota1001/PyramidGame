@@ -3,19 +3,30 @@
     <head>
         <meta charset="UTF-8">
         <title>SignUp</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/login.css">
     </head>
-    <body>
-        <form method="post" action="/signUp">
-            <label>Username</label>
-                <input type="text" name="username">
-            <br/>
-            <label>Password</label>
-                <input type="password" name="password">
-            <br/>
-            <label>Password Again</label>
-                <input type="password" name="passwordAgain">
-            <br/>
-            <button type="submit">SignUp</button>
-        </form>
-    </body>
+        <body style="background-color: rgb(231, 209, 161);">
+            <div class="form_container">
+                <div class ="form login_form">
+                    <form method="post" action="/signUp">
+                        <h2>SignUp</h2>
+    
+                        <div class="input_box">
+                            <input type="text" name="username" placeholder="Enter your username"/>
+                        </div>
+                        <div class="input_box">
+                            <input type="password" name="password" placeholder="Enter your password"/>
+                        </div>
+                        <div class="input_box">
+                            <input type="password" name="passwordAgain" placeholder="Confirm your password"/>
+                        </div>
+                        <button class="button" type="submit">SignUp Now</button>
+                        <div class="login_signup">
+                            Already have an account?<a href="/login" id="signup">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </body>
+
 </html>
