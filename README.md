@@ -1,2 +1,2 @@
 # PyramidGame
-![](https://github.com/Rota1001/PyramidGame/tree/main/img/example.png)
+![](https://github.com/Rota1001/PyramidGame/blob/main/img/example.png)
