@@ -12,8 +12,9 @@ playerList = []
 playingList = {}
 board = {}
 n = 0
+staticPath = "./static"
 
-with open("./static/data/password.json", "r") as fp:
+with open(staticPath + "/data/password.json", "r") as fp:
     users = json.load(fp)
 
 class User(UserMixin):
@@ -71,7 +72,7 @@ def signUp():
         user.id = username
         users.update({username : {"password" : request.form['password']}})
         login_user(user)
-        with open('./static/data/password.json', 'w') as fp:
+        with open(staticPath + '/data/password.json', 'w') as fp:
             fp.write(json.dumps(users))
         return redirect('/login')
     return render_template("signUp.html")
