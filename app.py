@@ -44,7 +44,6 @@ def createBoard():
 
 @app.route("/")
 def root():
-    return render_template("test.html")
     return redirect("/index")
 
 @app.route("/index")

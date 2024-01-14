@@ -1,0 +1,39 @@
+.triBtn{
+    font-family: sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+    font-size: 1.2rem;
+    }
+    .triBtn::before{
+    content: '';
+    border-bottom: 200px solid rgb(0, 0, 0);
+    border-left: 120px solid transparent;
+    border-right: 120px solid transparent;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    z-index: -1;
+    }
+    .triBtnFliped{
+    font-family: sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    position: relative;
+    font-size: 1.2rem;
+    }
+    .triBtnFliped::before{
+    content: '';
+    border-bottom: 200px solid rgb(255, 255, 255);
+    border-left: 120px solid transparent;
+    border-right: 120px solid transparent;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5) rotate(180deg);
+    z-index: -1;
+    }
+    

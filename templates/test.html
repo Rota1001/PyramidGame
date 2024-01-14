@@ -2,88 +2,12 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <style>
-            .triBtn{
-            font-family: sans-serif;
-            font-weight: bold;
-            text-decoration: none;
-            color: #fff;
-            position: relative;
-            font-size: 1.2rem;
-            }
-            .triBtn::before{
-            content: '';
-            border-bottom: 200px solid rgb(0, 0, 0);
-            border-left: 120px solid transparent;
-            border-right: 120px solid transparent;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.5);
-            z-index: -1;
-            }
-            .triBtnFliped{
-            font-family: sans-serif;
-            font-weight: bold;
-            text-decoration: none;
-            color: #fff;
-            position: relative;
-            font-size: 1.2rem;
-            }
-            .triBtnFliped::before{
-            content: '';
-            border-bottom: 200px solid rgb(255, 255, 255);
-            border-left: 120px solid transparent;
-            border-right: 120px solid transparent;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.5) rotate(180deg);
-            z-index: -1;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="/static/css/board.css">
     </head>   
     
-    <body id="body" style="background-color: rgb(231, 209, 161);">
-        <script src="./static/javascript/board.js"></script>
-        <script>
-            reftop = window.screen.height / 2 + 100;
-            refleft = window.screen.width / 2 - 120 * 2.5;
-            for(i = 0; i < 5; i++){
-                for(j = 0; i + j < 5; j++){
-                   document.body.innerHTML += btn(1, refleft + (i + j / 2) * 120, reftop - (j) * 100);
-                }
-            }
-            for(i = 0; i < 5; i++){
-                for(j = 0; i + j < 4; j++){
-                   document.body.innerHTML += arcbtn(1, refleft + (i + j / 2 + 1 / 2) * 120, reftop - (j) * 100);
-                }
-            }
-            function printMousePos(event) {
-                x = event.clientX;
-                y = event.clientY;
-                x -= refleft - 60;
-                y -= reftop + 50;
-                tmpx = (100 * x + 60 * y) / 12000;
-                tmpy = (120 * y) / (-12000);
-                x = tmpx;
-                y = tmpy;
-                floorx = Math.floor(x)
-                floory = Math.floor(y)
-                z = 0
-                if(x - floorx + y - floory > 1){
-                    z = 1
-                }
-                alert(`x:${floorx} y:${floory} z:${z}`);
-            }
-
-           // document.addEventListener("click", printMousePos);
-            
-           // document.body.innerHTML += btn(1, 100, 600);
-         /*   document.body.innerHTML += btn(2, 200, 440);
-            document.body.innerHTML += arcbtn(3, 200, 500);*/
-        </script>
+    <body style="background-color: rgb(231, 209, 161);">
+        <script src="/static/javascript/board.js"></script>
+        <script>init();</script>
         <div style="position:absolute;top:100px;left:500px;color:#fff;transform: translate(-50%, -25%);font-size:1.2rem;font-family:sans-serif;font-weight:bold;"></div>
-
     </body>
 </html>
