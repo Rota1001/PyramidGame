@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <script>
+            $.ajax({
+                url : ("/test?name="+3),
+                method : "GET",
+                dataType : "json",
+                success : function(res){
+                    alert(res.a);
+                    alert(res.c);
+                } ,
+                error : function(err){
+                    alert("error");
+                }
+            })
+        </script>
+    </body>
+</html>
