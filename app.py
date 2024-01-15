@@ -71,7 +71,7 @@ def signUp():
     if request.method == 'GET':
         return render_template("signUp.html")
     username = request.form['username']
-    if (username not in users) and (request.form['password'] == request.form['passwordAgain']):
+    if (username not in users) and (request.form['password'] != "" and request.form['password'] == request.form['passwordAgain']):
         user = User()
         user.id = username
         users.update({username : {"password" : request.form['password']}})
